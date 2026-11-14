@@ -5,6 +5,12 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
 
@@ -13,9 +19,13 @@ import java.math.BigDecimal;
 public class Producto extends BaseEntity {
 
     @Column(name = "sku", nullable = false, unique = true)
+    @NotBlank
+    @Size(max = 40)
     private String sku;
 
     @Column(name = "nombre", nullable = false)
+    @NotBlank
+    @Size(max = 150)
     private String nombre;
 
     // VULNERABILIDAD: la descripcion se guarda tal cual y el frontend la
@@ -25,15 +35,25 @@ public class Producto extends BaseEntity {
     private String descripcion;
 
     @Column(name = "precio", nullable = false)
+    @NotNull
+    @DecimalMin("0.00")
+    @Digits(integer = 8, fraction = 2)
     private BigDecimal precio = BigDecimal.ZERO;
 
     @Column(name = "costo", nullable = false)
+    @NotNull
+    @DecimalMin("0.00")
+    @Digits(integer = 8, fraction = 2)
     private BigDecimal costo = BigDecimal.ZERO;
 
     @Column(name = "stock", nullable = false)
+    @NotNull
+    @PositiveOrZero
     private Integer stock = 0;
 
     @Column(name = "stock_minimo", nullable = false)
+    @NotNull
+    @PositiveOrZero
     private Integer stockMinimo = 5;
 
     @Column(name = "categoria_id")

@@ -1,5 +1,6 @@
 package com.curso.pv.producto;
 
+import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,13 +53,13 @@ public class ProductoControlador {
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public Producto crear(@RequestPart("producto") Producto producto,
+    public Producto crear(@Valid @RequestPart("producto") Producto producto,
                           @RequestPart(value = "imagen", required = false) MultipartFile imagen) {
         return servicio.crear(producto, imagen);
     }
 
     @PutMapping("/{id}")
-    public Producto actualizar(@PathVariable Long id, @RequestBody Producto producto) {
+    public Producto actualizar(@PathVariable Long id, @Valid @RequestBody Producto producto) {
         return servicio.actualizar(id, producto);
     }
 
