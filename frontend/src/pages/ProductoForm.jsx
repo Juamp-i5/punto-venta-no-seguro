@@ -81,22 +81,22 @@ export default function ProductoForm() {
 
         <label>
           Precio
-          <input type="number" step="0.01" value={form.precio} onChange={cambiar('precio')} />
+          <input type="number" min="0" step="0.01" value={form.precio} onChange={cambiar('precio')} />
         </label>
 
         <label>
           Costo
-          <input type="number" step="0.01" value={form.costo} onChange={cambiar('costo')} />
+          <input type="number" min="0" step="0.01" value={form.costo} onChange={cambiar('costo')} />
         </label>
 
         <label>
           Stock
-          <input type="number" value={form.stock} onChange={cambiar('stock')} />
+          <input type="number" min="0" step="1" value={form.stock} onChange={cambiar('stock')} />
         </label>
 
         <label>
           Stock minimo
-          <input type="number" value={form.stockMinimo} onChange={cambiar('stockMinimo')} />
+          <input type="number" min="0" step="1" value={form.stockMinimo} onChange={cambiar('stockMinimo')} />
         </label>
 
         <label>

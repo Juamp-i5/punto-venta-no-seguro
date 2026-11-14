@@ -2,6 +2,7 @@ package com.curso.pv.auth;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -69,7 +70,7 @@ public class AuthControlador {
     }
 
     @PostMapping("/registro")
-    public ResponseEntity<?> registro(@RequestBody Map<String, String> datos, HttpServletRequest request) {
+    public ResponseEntity<?> registro(@Valid @RequestBody RegistroRequestDTO datos, HttpServletRequest request) {
         return ResponseEntity.ok(servicio.registrar(datos, request));
     }
 
