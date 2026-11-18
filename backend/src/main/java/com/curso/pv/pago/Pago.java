@@ -31,10 +31,6 @@ public class Pago {
     @Column(name = "numero_tarjeta")
     private String numeroTarjeta;
 
-    // VULNERABILIDAD: el CVV se almacena, cuando nunca deberia guardarse
-    @Column(name = "cvv")
-    private String cvv;
-
     @Column(name = "fecha_vencimiento")
     private String fechaVencimiento;
 
@@ -88,14 +84,6 @@ public class Pago {
 
     public void setNumeroTarjeta(String numeroTarjeta) {
         this.numeroTarjeta = numeroTarjeta;
-    }
-
-    public String getCvv() {
-        return cvv;
-    }
-
-    public void setCvv(String cvv) {
-        this.cvv = cvv;
     }
 
     public String getFechaVencimiento() {

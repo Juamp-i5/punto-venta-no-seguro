@@ -88,11 +88,11 @@ INSERT INTO venta_items (venta_id, producto_id, descripcion, cantidad, precio_un
 -- Pagos de ejemplo
 -- VULNERABILIDAD: PAN y CVV almacenados sin cifrar
 -- ------------------------------------------------------------
-INSERT INTO pagos (venta_id, metodo, titular, numero_tarjeta, cvv, fecha_vencimiento, monto, estado, referencia) VALUES
-  (1, 'TARJETA', 'MARIA GOMEZ',     '4111111111111111', '123', '12/27', 40.70,  'APROBADO', 'TXN-8F3A21C9'),
-  (2, 'EFECTIVO','CARLOS RAMIREZ',  NULL,               NULL,  NULL,     50.72,  'APROBADO', 'TXN-2B7E44D1'),
-  (3, 'TARJETA', 'LUCIA FERNANDEZ', '5555555555554444', '456', '08/26', 15.23,  'APROBADO', 'TXN-5C1D9A77'),
-  (4, 'TARJETA', 'JORGE DIAZ',      '4222222222222',    '321', '03/28', 69.38,  'APROBADO', 'TXN-9E4F60B2');
+INSERT INTO pagos (venta_id, metodo, titular, numero_tarjeta, fecha_vencimiento, monto, estado, referencia) VALUES
+  (1, 'TARJETA', 'MARIA GOMEZ',     '4111111111111111', '12/27', 40.70,  'APROBADO', 'TXN-8F3A21C9'),
+  (2, 'EFECTIVO','CARLOS RAMIREZ',  NULL,               NULL,     50.72,  'APROBADO', 'TXN-2B7E44D1'),
+  (3, 'TARJETA', 'LUCIA FERNANDEZ', '5555555555554444', '08/26', 15.23,  'APROBADO', 'TXN-5C1D9A77'),
+  (4, 'TARJETA', 'JORGE DIAZ',      '4222222222222',    '03/28', 69.38,  'APROBADO', 'TXN-9E4F60B2');
 
 -- ------------------------------------------------------------
 -- Configuracion
