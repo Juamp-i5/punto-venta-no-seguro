@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api")
@@ -23,11 +24,14 @@ public class ConfiguracionControlador {
         this.consultas = consultas;
     }
 
-    // VULNERABILIDAD: devuelve TODA la configuracion, incluidas las claves de
-    // la pasarela, el secreto JWT y la contrasena del correo, todo en claro
+    private static final Set<String> CLAVES_PUBLICAS =
+            Set.of("tienda.nombre", "tienda.direccion", "impuesto.porcentaje");
+
     @GetMapping("/configuracion")
     public List<Configuracion> listar() {
-        return repositorio.findAll();
+        return repositorio.findAll().stream()
+                .filter(c -> CLAVES_PUBLICAS.contains(c.getClave()))
+                .toList();
     }
 
     // VULNERABILIDAD (SQLi): el filtro se concatena en la consulta nativa
