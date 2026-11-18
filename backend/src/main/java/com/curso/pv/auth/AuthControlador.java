@@ -51,6 +51,12 @@ public class AuthControlador {
         Authentication autenticacion = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(username, password));
 
+        // El login es un controlador propio y no pasa por el filtro de login de Spring Security.
+        // Por eso rotamos aquí el ID preexistente para evitar la fijación de sesión.
+        if (request.getSession(false) != null) {
+            request.changeSessionId();
+        }
+
         SecurityContext contexto = SecurityContextHolder.createEmptyContext();
         contexto.setAuthentication(autenticacion);
         SecurityContextHolder.setContext(contexto);
