@@ -1,12 +1,17 @@
 package com.curso.pv.integracion;
 
+import java.net.InetAddress;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 public class IntegracionServicio {
@@ -15,19 +20,20 @@ public class IntegracionServicio {
 
     private final RestTemplate cliente = new RestTemplate();
 
-    /**
-     * VULNERABILIDAD (SSRF): el backend realiza la peticion a una URL que elige
-     * el usuario sin ninguna validacion. Permite:
-     *   - alcanzar servicios internos (localhost, red interna)
-     *   - consultar metadatos de la nube en 169.254.169.254
-     *   - leer archivos locales con el esquema file://
-     *   - redirigir el trafico a terceros (pivote para escanear puertos)
-     */
+    @Value("${app.integraciones.dominios-permitidos:}")
+    private List<String> dominiosPermitidos = new ArrayList<>();
+
     public Map<String, Object> consultarUrl(String url) {
         Map<String, Object> respuesta = new HashMap<>();
 
-        // VULNERABILIDAD: se registra la URL solicitada en el log
         log.info("Consultando URL externa solicitada por el cliente: {}", url);
+
+        if (!destinoPermitido(url)) {
+            respuesta.put("url", url);
+            respuesta.put("estado", "RECHAZADO");
+            respuesta.put("error", "Destino no permitido");
+            return respuesta;
+        }
 
         try {
             String cuerpo = cliente.getForObject(url, String.class);
@@ -91,5 +97,33 @@ public class IntegracionServicio {
         }
 
         return respuesta;
+    }
+
+    private boolean destinoPermitido(String url) {
+        try {
+            URI uri = new URI(url);
+            String esquema = uri.getScheme();
+            String host = uri.getHost();
+            if (esquema == null || host == null) {
+                return false;
+            }
+            if (!esquema.equalsIgnoreCase("http") && !esquema.equalsIgnoreCase("https")) {
+                return false;
+            }
+            if (dominiosPermitidos == null || !dominiosPermitidos.contains(host.toLowerCase())) {
+                return false;
+            }
+            for (InetAddress ip : InetAddress.getAllByName(host)) {
+                if (ip.isLoopbackAddress()          
+                        || ip.isSiteLocalAddress()  
+                        || ip.isLinkLocalAddress()  
+                        || ip.isAnyLocalAddress()) { 
+                    return false;
+                }
+            }
+            return true;
+        } catch (Exception error) {
+            return false;
+        }
     }
 }
