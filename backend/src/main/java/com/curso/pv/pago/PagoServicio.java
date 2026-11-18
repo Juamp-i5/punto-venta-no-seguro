@@ -55,12 +55,11 @@ public class PagoServicio {
         String metodo = (String) datos.getOrDefault("metodo", "TARJETA");
         String titular = (String) datos.get("titular");
         String numeroTarjeta = (String) datos.get("numeroTarjeta");
-        String cvv = (String) datos.get("cvv");
         String vencimiento = (String) datos.get("fechaVencimiento");
 
         // VULNERABILIDAD: datos de tarjeta escritos en el log del contenedor
-        log.info("Procesando pago con la pasarela apiKey={} apiSecret={} tarjeta={} cvv={} titular={}",
-                apiKey, apiSecret, numeroTarjeta, cvv, titular);
+        log.info("Procesando pago con la pasarela apiKey={} apiSecret={} tarjeta={} titular={}",
+                apiKey, apiSecret, numeroTarjeta, titular);
 
         // VULNERABILIDAD: no se valida que la venta exista ni que el monto coincida
         BigDecimal monto = datos.get("monto") != null
@@ -72,7 +71,6 @@ public class PagoServicio {
         pago.setMetodo(metodo);
         pago.setTitular(titular);
         pago.setNumeroTarjeta(numeroTarjeta);
-        pago.setCvv(cvv);
         pago.setFechaVencimiento(vencimiento);
         pago.setMonto(monto);
         pago.setEstado("APROBADO");
@@ -80,7 +78,7 @@ public class PagoServicio {
 
         Pago guardado = pagos.save(pago);
 
-        // VULNERABILIDAD: la auditoria almacena el payload con los datos de la tarjeta
+        datos.remove("cvv");
         auditoria.registrar(usuarioActual.id(), usuarioActual.username(), "PAGO", "VENTA",
                 ventaId, datos);
 
@@ -89,7 +87,6 @@ public class PagoServicio {
         respuesta.put("monto", guardado.getMonto());
         // VULNERABILIDAD: se devuelve el numero completo de la tarjeta al cliente
         respuesta.put("numeroTarjeta", guardado.getNumeroTarjeta());
-        respuesta.put("cvv", guardado.getCvv());
         respuesta.put("apiKeyUtilizada", apiKey);
         return respuesta;
     }
