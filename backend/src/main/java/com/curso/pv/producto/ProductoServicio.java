@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -43,29 +44,30 @@ public class ProductoServicio {
 
     @Transactional(readOnly = true)
     public List<Producto> listar() {
-        return productos.findAll();
+        return sanearDescripciones(productos.findAll());
     }
 
     // VULNERABILIDAD (SQLi): el texto se concatena en la consulta nativa
     @Transactional(readOnly = true)
     public List<?> buscar(String texto) {
-        return consultas.buscar(texto);
+        return sanearDescripciones(consultas.buscar(texto));
     }
 
     // VULNERABILIDAD (SQLi): los limites de precio se interpolan sin validar
     @Transactional(readOnly = true)
     public List<?> buscarPorRango(String minimo, String maximo) {
-        return consultas.buscarPorRango(minimo, maximo);
+        return sanearDescripciones(consultas.buscarPorRango(minimo, maximo));
     }
 
     @Transactional(readOnly = true)
     public Producto obtener(Long id) {
-        return productos.findById(id).orElse(null);
+        Producto producto = productos.findById(id).orElse(null);
+        return sanearDescripcion(producto);
     }
 
     @Transactional(readOnly = true)
     public List<Producto> stockBajo() {
-        return productos.stockBajo();
+        return sanearDescripciones(productos.stockBajo());
     }
 
     @Transactional(readOnly = true)
@@ -81,7 +83,8 @@ public class ProductoServicio {
 
     @Transactional
     public Producto crear(Producto producto, MultipartFile imagen) {
-        // VULNERABILIDAD: ningun campo se valida ni se sanea
+        // VULNERABILIDAD: ningun otro campo se valida ni se sanea
+        producto.setDescripcion(SanitizadorHtml.limpiar(producto.getDescripcion()));
         if (imagen != null && !imagen.isEmpty()) {
             producto.setImagenPath(subirImagen(imagen, producto.getSku()));
         }
@@ -99,8 +102,8 @@ public class ProductoServicio {
         }
         existente.setSku(datos.getSku());
         existente.setNombre(datos.getNombre());
-        // VULNERABILIDAD: HTML y scripts se guardan tal cual
-        existente.setDescripcion(datos.getDescripcion());
+        // DEFENSA (XSS): la descripcion se guarda solo con HTML de la allowlist
+        existente.setDescripcion(SanitizadorHtml.limpiar(datos.getDescripcion()));
         existente.setPrecio(datos.getPrecio());
         existente.setCosto(datos.getCosto());
         existente.setStock(datos.getStock());
@@ -125,6 +128,23 @@ public class ProductoServicio {
         auditoria.registrar(usuarioActual.id(), usuarioActual.username(), "CREAR", "CATEGORIA",
                 guardada.getId(), categoria);
         return guardada;
+    }
+
+    private List<Producto> sanearDescripciones(List<?> filas) {
+        List<Producto> salida = new ArrayList<>(filas.size());
+        for (Object fila : filas) {
+            if (fila instanceof Producto producto) {
+                salida.add(sanearDescripcion(producto));
+            }
+        }
+        return salida;
+    }
+
+    private Producto sanearDescripcion(Producto producto) {
+        if (producto != null) {
+            producto.setDescripcion(SanitizadorHtml.limpiar(producto.getDescripcion()));
+        }
+        return producto;
     }
 
     /**
