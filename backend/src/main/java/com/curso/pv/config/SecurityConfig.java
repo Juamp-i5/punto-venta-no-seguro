@@ -4,6 +4,8 @@ import com.curso.pv.security.CodificadorEnClaro;
 import com.curso.pv.security.UsuariosDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -11,6 +13,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.context.SecurityContextRepository;
 
@@ -35,11 +38,15 @@ public class SecurityConfig {
                 // VULNERABILIDAD: se reutiliza la sesion existente sin validar su origen
                 .securityContext(contexto -> contexto.securityContextRepository(contextoRepositorio))
 
-                // VULNERABILIDAD: toda la API es publica, no hay control de acceso por rol
+                // La API solo es accesible con una sesion de VENDEDOR o ADMIN.
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/**").permitAll()
-                        .requestMatchers("/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/auth/login", "/api/auth/registro").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/salud").permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers("/api/**").hasAnyAuthority("ROL_ADMIN", "ROL_VENDEDOR")
                         .anyRequest().permitAll())
+                .exceptionHandling(excepciones -> excepciones
+                        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
 
                 // VULNERABILIDAD: HTTP Basic habilitado, las credenciales viajan en cada peticion
                 .httpBasic(basic -> { })
