@@ -2,8 +2,6 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import cliente from '../api/client'
 
-const ROLES = ['VENDEDOR', 'ADMIN', 'CLIENTE']
-
 export default function Registro() {
   const navegar = useNavigate()
   const [form, setForm] = useState({
@@ -11,8 +9,6 @@ export default function Registro() {
     password: '',
     nombre: '',
     email: '',
-    // VULNERABILIDAD: el rol viaja como campo libre en el formulario
-    rol: 'VENDEDOR',
   })
   const [resultado, setResultado] = useState(null)
 
@@ -54,17 +50,6 @@ export default function Registro() {
         <label>
           Email
           <input value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
-        </label>
-
-        <label>
-          Rol
-          <select value={form.rol} onChange={(e) => setForm({ ...form, rol: e.target.value })}>
-            {ROLES.map((r) => (
-              <option key={r} value={r}>
-                {r}
-              </option>
-            ))}
-          </select>
         </label>
 
         <button type="submit">Registrarme</button>
