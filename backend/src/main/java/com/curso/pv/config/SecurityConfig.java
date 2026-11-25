@@ -28,10 +28,9 @@ public class SecurityConfig {
                 // VULNERABILIDAD: sin CSP ni demas cabeceras de seguridad
                 .headers(headers -> { })
 
-                // VULNERABILIDAD: la sesion no se renueva al iniciar sesion (session fixation)
                 .sessionManagement(sesion -> sesion
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                        .sessionFixation(fixacion -> { }))
+                        .sessionFixation(fixacion -> fixacion.changeSessionId()))
 
                 // VULNERABILIDAD: se reutiliza la sesion existente sin validar su origen
                 .securityContext(contexto -> contexto.securityContextRepository(contextoRepositorio))
