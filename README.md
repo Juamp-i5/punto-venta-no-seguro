@@ -50,7 +50,7 @@ docker compose down -v
 | Pagos | `/api/pagos/*` | cobro simulado, consulta por tarjeta |
 | Reportes | `/api/reportes/*` | resumen, ventas, export HTML/CSV, estructura de la BD |
 | Integraciones | `/api/integraciones/*` | consulta y envío de datos a URLs arbitrarias |
-| Configuración | `/api/configuracion/*`, `/api/diagnostico` | variables y secretos del sistema |
+| Configuración | `/api/diagnostico` | variables y secretos del sistema |
 
 Los movimientos quedan registrados en la tabla `auditoria` (VULNERABILIDAD: se
 guarda en texto plano y se inserta directo desde los servicios, sin control de

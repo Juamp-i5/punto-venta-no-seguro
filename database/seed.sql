@@ -95,22 +95,6 @@ INSERT INTO pagos (venta_id, metodo, titular, numero_tarjeta, cvv, fecha_vencimi
   (4, 'TARJETA', 'JORGE DIAZ',      '4222222222222',    '321', '03/28', 69.38,  'APROBADO', 'TXN-9E4F60B2');
 
 -- ------------------------------------------------------------
--- Configuracion
--- VULNERABILIDAD: credenciales y claves de servicios guardadas
--- en texto plano dentro de la base de datos
--- ------------------------------------------------------------
-INSERT INTO configuracion (clave, valor, categoria) VALUES
-  ('pasarela.api.key',      'sk_live_9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c',              'PAGADERA'),
-  ('pasarela.secret',       's3cr3t-pasarela-que-nunca-deberia-estar-aqui',          'PAGADERA'),
-  ('correo.admin',          'admin@puntoventa.local',                                'CORREO'),
-  ('correo.password',       'correo-admin-2024',                                     'CORREO'),
-  ('impuesto.porcentaje',   '19.00',                                                'VENTAS'),
-  ('tienda.nombre',         'Supermercado El Vendedor',                              'GENERAL'),
-  ('tienda.direccion',      'Av. Principal 1234, Ciudad Internacional',              'GENERAL'),
-  ('jwt.secret',            'clave-jwt-insegura-de-larga-utilizada-para-firmar',    'SEGURIDAD'),
-  ('session.timeout.dias',  '30',                                                   'SEGURIDAD');
-
--- ------------------------------------------------------------
 -- Auditoria
 -- VULNERABILIDAD: se registran passwords y datos de tarjeta en claro
 -- ------------------------------------------------------------
