@@ -84,7 +84,7 @@ export default function FacturaDetalle() {
         <ul>
           {pagos.map((p) => (
             <li key={p.id}>
-              {p.metodo} — {p.monto} — {p.estado} — tarjeta {p.numeroTarjeta} (cvv {p.cvv})
+              {p.metodo} — {p.monto} — {p.estado} — tarjeta {p.numeroTarjeta}
             </li>
           ))}
         </ul>

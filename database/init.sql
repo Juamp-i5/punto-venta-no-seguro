@@ -126,7 +126,6 @@ CREATE TABLE IF NOT EXISTS pagos (
   metodo            VARCHAR(30) NOT NULL DEFAULT 'TARJETA' COMMENT 'TARJETA | EFECTIVO | TRANSFERENCIA',
   titular           VARCHAR(120),
   numero_tarjeta    VARCHAR(25)  COMMENT 'PAN completo en claro',
-  cvv               VARCHAR(10)  COMMENT 'CVV en claro',
   fecha_vencimiento VARCHAR(10),
   monto             DECIMAL(12,2) NOT NULL DEFAULT 0.00,
   estado            VARCHAR(30) NOT NULL DEFAULT 'APROBADO',

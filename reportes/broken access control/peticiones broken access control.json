@@ -1,0 +1,463 @@
+{
+  "info": {
+    "_postman_id": "6f1c2b8e-4a7d-4c9e-9f3a-1d2e5b7c8a90",
+    "name": "Broken Access Control",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "01 · anónimo diagnostico",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5173/api/diagnostico",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5173",
+          "path": [
+            "api",
+            "diagnostico"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "01 · anónimo configuracion",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5173/api/configuracion",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5173",
+          "path": [
+            "api",
+            "configuracion"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "01 · anónimo estructura BD",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5173/api/reportes/base-datos",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5173",
+          "path": [
+            "api",
+            "reportes",
+            "base-datos"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "02 · login vendedor",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"username\": \"vendedor\",\r\n    \"password\": \"vendedor\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5173/api/auth/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5173",
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "02 · vendedor usuarios",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "description": "Ejecutar después del login de vendedor; Postman reutiliza la cookie PVSESSION.",
+        "url": {
+          "raw": "http://localhost:5173/api/usuarios",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5173",
+          "path": [
+            "api",
+            "usuarios"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "02 · vendedor configuracion",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5173/api/configuracion",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5173",
+          "path": [
+            "api",
+            "configuracion"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "02 · vendedor diagnostico",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5173/api/diagnostico",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5173",
+          "path": [
+            "api",
+            "diagnostico"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "02 · vendedor estructura BD",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5173/api/reportes/base-datos",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5173",
+          "path": [
+            "api",
+            "reportes",
+            "base-datos"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "03 · registro rol ADMIN",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"username\": \"pwn\",\r\n    \"password\": \"pwn\",\r\n    \"rol\": \"ADMIN\",\r\n    \"nombre\": \"Pwn\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5173/api/auth/registro",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5173",
+          "path": [
+            "api",
+            "auth",
+            "registro"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "03 · login pwn",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"username\": \"pwn\",\r\n    \"password\": \"pwn\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5173/api/auth/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5173",
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "03 · pwn usuarios",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "description": "Ejecutar después del login de pwn; Postman reutiliza la cookie PVSESSION.",
+        "url": {
+          "raw": "http://localhost:5173/api/usuarios",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5173",
+          "path": [
+            "api",
+            "usuarios"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "04 · cambiar rol vendedor",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"username\": \"vendedor\",\r\n    \"password\": \"vendedor\",\r\n    \"nombre\": \"Vendedor Mostrador\",\r\n    \"email\": \"vendedor@puntoventa.local\",\r\n    \"rol\": \"ADMIN\",\r\n    \"activo\": true\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5173/api/usuarios/3",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5173",
+          "path": [
+            "api",
+            "usuarios",
+            "3"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "04 · login vendedor promovido",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"username\": \"vendedor\",\r\n    \"password\": \"vendedor\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5173/api/auth/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5173",
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "04 · yo",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5173/api/auth/yo",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5173",
+          "path": [
+            "api",
+            "auth",
+            "yo"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "05 · venta ajena",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "description": "La venta 2 pertenece al usuario 4; la sesión es del usuario 3 (vendedor).",
+        "url": {
+          "raw": "http://localhost:5173/api/ventas/2",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5173",
+          "path": [
+            "api",
+            "ventas",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "05 · anular venta ajena",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5173/api/ventas/2/anular?motivo=prueba",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5173",
+          "path": [
+            "api",
+            "ventas",
+            "2",
+            "anular"
+          ],
+          "query": [
+            {
+              "key": "motivo",
+              "value": "prueba"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "05 · pagos venta ajena",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5173/api/pagos/venta/2",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5173",
+          "path": [
+            "api",
+            "pagos",
+            "venta",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "06 · nota localStorage",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "description": "BAC-06 es una prueba de navegador: login como vendedor, DevTools > Application > Local Storage > pv_usuario, cambiar authorities a ROL_ADMIN y recargar. Esta petición solo confirma las autoridades que el servidor devuelve.",
+        "url": {
+          "raw": "http://localhost:5173/api/auth/yo",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5173",
+          "path": [
+            "api",
+            "auth",
+            "yo"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

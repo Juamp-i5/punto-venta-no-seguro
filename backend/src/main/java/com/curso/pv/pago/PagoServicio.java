@@ -21,8 +21,8 @@ public class PagoServicio {
     private static final Logger log = LoggerFactory.getLogger(PagoServicio.class);
 
     // VULNERABILIDAD: credenciales de la pasarela escritas directamente en el codigo
-    private final String apiKey = "sk_live_9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c";
-    private final String apiSecret = "s3cr3t-pasarela-que-nunca-deberia-estar-aqui";
+    private final String apiKey = System.getenv("PASARELA_API_KEY");
+    private final String apiSecret = System.getenv("PASARELA_SECRET");
 
     private final PagoRepositorio pagos;
     private final PagoConsultasInseguras consultas;
@@ -55,12 +55,11 @@ public class PagoServicio {
         String metodo = (String) datos.getOrDefault("metodo", "TARJETA");
         String titular = (String) datos.get("titular");
         String numeroTarjeta = (String) datos.get("numeroTarjeta");
-        String cvv = (String) datos.get("cvv");
         String vencimiento = (String) datos.get("fechaVencimiento");
 
         // VULNERABILIDAD: datos de tarjeta escritos en el log del contenedor
-        log.info("Procesando pago con la pasarela apiKey={} apiSecret={} tarjeta={} cvv={} titular={}",
-                apiKey, apiSecret, numeroTarjeta, cvv, titular);
+        log.info("Procesando pago con la pasarela apiKey={} apiSecret={} tarjeta={} titular={}",
+                apiKey, apiSecret, numeroTarjeta, titular);
 
         // VULNERABILIDAD: no se valida que la venta exista ni que el monto coincida
         BigDecimal monto = datos.get("monto") != null
@@ -72,7 +71,6 @@ public class PagoServicio {
         pago.setMetodo(metodo);
         pago.setTitular(titular);
         pago.setNumeroTarjeta(numeroTarjeta);
-        pago.setCvv(cvv);
         pago.setFechaVencimiento(vencimiento);
         pago.setMonto(monto);
         pago.setEstado("APROBADO");
@@ -80,7 +78,7 @@ public class PagoServicio {
 
         Pago guardado = pagos.save(pago);
 
-        // VULNERABILIDAD: la auditoria almacena el payload con los datos de la tarjeta
+        datos.remove("cvv");
         auditoria.registrar(usuarioActual.id(), usuarioActual.username(), "PAGO", "VENTA",
                 ventaId, datos);
 
@@ -89,7 +87,6 @@ public class PagoServicio {
         respuesta.put("monto", guardado.getMonto());
         // VULNERABILIDAD: se devuelve el numero completo de la tarjeta al cliente
         respuesta.put("numeroTarjeta", guardado.getNumeroTarjeta());
-        respuesta.put("cvv", guardado.getCvv());
         respuesta.put("apiKeyUtilizada", apiKey);
         return respuesta;
     }

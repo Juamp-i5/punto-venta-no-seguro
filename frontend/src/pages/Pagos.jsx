@@ -135,7 +135,6 @@ export default function Pagos() {
               <th>Metodo</th>
               <th>Titular</th>
               <th>Tarjeta</th>
-              <th>CVV</th>
               <th>Monto</th>
               <th>Estado</th>
               <th>Referencia</th>
@@ -150,7 +149,6 @@ export default function Pagos() {
                 <td>{p.titular}</td>
                 {/* VULNERABILIDAD: PAN y CVV completos visibles para cualquiera */}
                 <td>{p.numeroTarjeta}</td>
-                <td>{p.cvv}</td>
                 <td>{p.monto}</td>
                 <td>{p.estado}</td>
                 <td>{p.referencia}</td>

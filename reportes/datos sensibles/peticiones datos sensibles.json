@@ -1,0 +1,242 @@
+{
+  "info": {
+    "_postman_id": "dfc5c88d-0d2b-47a2-a882-7b943dc7bf99",
+    "name": "Datos sensibles",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "44493037",
+    "_collection_link": "https://go.postman.co/collection/44493037-dfc5c88d-0d2b-47a2-a882-7b943dc7bf99?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "stacktrace + sessionID",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"admin\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5173/api/auth/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5173",
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "secretos",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5173/api/configuracion",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5173",
+          "path": [
+            "api",
+            "configuracion"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "secretos + variables de entorno",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5173/api/diagnostico",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5173",
+          "path": [
+            "api",
+            "diagnostico"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "variables de entorno",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5173/api/configuracion/variables",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5173",
+          "path": [
+            "api",
+            "configuracion",
+            "variables"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "usuarios con contraseña",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5173/api/usuarios",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5173",
+          "path": [
+            "api",
+            "usuarios"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "datos tarjeta",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"ventaId\": \"4\",\r\n    \"metodo\": \"TARJETA\",\r\n    \"titular\": \"a\",\r\n    \"numeroTarjeta\": \"a\",\r\n    \"cvv\": \"123\",\r\n    \"fechaVencimiento\": \"12\",\r\n    \"monto\": \"12\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5173/api/pagos/procesar",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5173",
+          "path": [
+            "api",
+            "pagos",
+            "procesar"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "datos tarjetas",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5173/api/pagos",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5173",
+          "path": [
+            "api",
+            "pagos"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "datos pago",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5173/api/pagos/venta/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5173",
+          "path": [
+            "api",
+            "pagos",
+            "venta",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "secret",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5173/api/pagos/configuracion",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5173",
+          "path": [
+            "api",
+            "pagos",
+            "configuracion"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "tomcat",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5173/api/auth/sesion?Cookie=PVSESSION=55DFF62313D31200809B8A1DD3F586D8",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5173",
+          "path": [
+            "api",
+            "auth",
+            "sesion"
+          ],
+          "query": [
+            {
+              "key": "Cookie",
+              "value": "PVSESSION=55DFF62313D31200809B8A1DD3F586D8"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
