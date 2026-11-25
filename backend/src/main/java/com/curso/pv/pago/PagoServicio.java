@@ -21,8 +21,8 @@ public class PagoServicio {
     private static final Logger log = LoggerFactory.getLogger(PagoServicio.class);
 
     // VULNERABILIDAD: credenciales de la pasarela escritas directamente en el codigo
-    private final String apiKey = "sk_live_9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c";
-    private final String apiSecret = "s3cr3t-pasarela-que-nunca-deberia-estar-aqui";
+    private final String apiKey = System.getenv("PASARELA_API_KEY");
+    private final String apiSecret = System.getenv("PASARELA_SECRET");
 
     private final PagoRepositorio pagos;
     private final PagoConsultasInseguras consultas;
