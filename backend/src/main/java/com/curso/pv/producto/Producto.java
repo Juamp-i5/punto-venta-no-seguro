@@ -18,8 +18,8 @@ public class Producto extends BaseEntity {
     @Column(name = "nombre", nullable = false)
     private String nombre;
 
-    // VULNERABILIDAD: la descripcion se guarda tal cual y el frontend la
-    // renderiza como HTML (XSS almacenado)
+    // DEFENSA (XSS): la descripcion se sanitiza en ProductoServicio antes de
+    // guardarse y al devolverse; el frontend solo recibe HTML de la allowlist
     @Lob
     @Column(name = "descripcion")
     private String descripcion;
